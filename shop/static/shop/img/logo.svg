@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Komaru Tea">
+  <circle cx="32" cy="32" r="30" fill="none" stroke="#c6a15a" stroke-width="1.4"/>
+  <path d="M33 50c.2-8 6.2-12.2 12-16.2-7.2.2-12.2 3.6-13.2 11.2-.6-7.4-5.6-13-13.8-15.6 6.6 3.4 11.2 9.2 15 20.6z" fill="#c6a15a"/>
+  <path d="M33 50c-1.2-6.4-1.6-12.4-.4-18" fill="none" stroke="#1a241c" stroke-width="0.8" opacity=".45"/>
+</svg>

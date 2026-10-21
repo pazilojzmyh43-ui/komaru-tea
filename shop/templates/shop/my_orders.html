@@ -1,0 +1,31 @@
+{% extends "shop/base.html" %}
+{% block title %}Мои заказы — Komaru Tea{% endblock %}
+{% block content %}
+<div class="page">
+  <div class="page-head"><h1>Мои заказы</h1></div>
+  {% if orders %}
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead><tr><th>№</th><th>Дата</th><th>Статус</th><th>Сумма</th><th></th></tr></thead>
+        <tbody>
+          {% for order in orders %}
+            <tr>
+              <td><a href="{% url 'order_detail' order.pk %}">{{ order.pk }}</a></td>
+              <td>{{ order.created_at|date:"j E Y, H:i" }}</td>
+              <td><span class="status status-{{ order.status }}">{{ order.get_status_display }}</span></td>
+              <td>{{ order.total|floatformat:0 }} ₽</td>
+              <td>
+                {% if order.can_client_edit %}
+                  <a href="{% url 'order_edit' order.pk %}">Изменить</a>
+                {% endif %}
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    <p class="empty">Заказов ещё нет.</p>
+  {% endif %}
+</div>
+{% endblock %}

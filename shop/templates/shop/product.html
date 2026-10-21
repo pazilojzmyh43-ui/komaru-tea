@@ -1,0 +1,41 @@
+{% extends "shop/base.html" %}
+{% block title %}{{ product.name }} — Komaru Tea{% endblock %}
+{% block content %}
+<div class="page">
+  <p class="crumb"><a href="{% url 'catalog' %}">Каталог</a> / <a href="{% url 'category' product.category.pk %}">{{ product.category.name }}</a></p>
+  <div class="product-layout">
+    <img class="product-photo" src="{{ product.image.url }}" alt="{{ product.name }}">
+    <div>
+      <p class="eyebrow">{{ product.category.name }}</p>
+      <h1>{{ product.name }}</h1>
+      <p class="price">{{ product.price|floatformat:0 }} ₽ <span>за {{ product.weight_grams }} г</span></p>
+      <ul class="meta-list">
+        {% if product.tea_type %}<li>Тип: {{ product.tea_type }}</li>{% endif %}
+        {% if product.region %}<li>Регион: {{ product.region }}</li>{% endif %}
+        <li>Категория: {{ product.category.name }}</li>
+      </ul>
+      <div class="prose"><p>{{ product.full_description }}</p></div>
+      {% if user_role == 'client' %}
+        <form method="post" action="{% url 'cart_add' product.pk %}" class="actions">
+          {% csrf_token %}
+          <label>Количество <input class="qty" type="number" name="quantity" value="1" min="1" max="20"></label>
+          <button class="btn btn-gold" type="submit">В корзину</button>
+        </form>
+      {% elif user.is_authenticated %}
+        <p class="muted">Заказ оформляет клиент. Войдите под учётной записью клиента.</p>
+      {% else %}
+        <p><a class="btn btn-line" href="{% url 'login' %}">Войти</a> <a class="btn btn-line" href="{% url 'register' %}">Регистрация</a></p>
+        <p class="muted">Гость может смотреть каталог. Чтобы положить чай в корзину, нужна регистрация клиента.</p>
+      {% endif %}
+    </div>
+  </div>
+  {% if related %}
+    <div class="section-head" style="margin-top:36px"><h2>Рядом в категории</h2></div>
+    <div class="product-grid">
+      {% for product in related %}
+        {% include "shop/_product_card.html" %}
+      {% endfor %}
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

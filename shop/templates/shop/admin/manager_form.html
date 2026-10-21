@@ -1,0 +1,11 @@
+{% extends "shop/admin/base_admin.html" %}
+{% block title %}Регистрация менеджера{% endblock %}
+{% block admin %}
+<h1>Регистрация менеджера</h1>
+<p>Новая учётная запись сразу получает роль «Менеджер» и доступ к заказам клиентов.</p>
+<form class="form-card" method="post">
+  {% csrf_token %}
+  {% include "shop/_fields.html" %}
+  <button class="btn btn-gold" type="submit">Зарегистрировать</button>
+</form>
+{% endblock %}

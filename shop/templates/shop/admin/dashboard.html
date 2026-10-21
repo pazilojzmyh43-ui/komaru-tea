@@ -1,0 +1,15 @@
+{% extends "shop/admin/base_admin.html" %}
+{% block title %}Администрирование — Komaru Tea{% endblock %}
+{% block admin %}
+<h1>Администрирование</h1>
+<p class="lead">Удалённое наполнение магазина: каталог, новости и учётные записи менеджеров и клиентов.</p>
+<div class="stat-grid">
+  <div class="stat"><b>{{ stats.categories }}</b><span>категории</span></div>
+  <div class="stat"><b>{{ stats.products }}</b><span>товары</span></div>
+  <div class="stat"><b>{{ stats.news }}</b><span>новости</span></div>
+  <div class="stat"><b>{{ stats.clients }}</b><span>клиенты</span></div>
+  <div class="stat"><b>{{ stats.managers }}</b><span>менеджеры</span></div>
+  <div class="stat"><b>{{ stats.orders }}</b><span>заказы</span></div>
+</div>
+<p style="margin-top:18px"><a href="/admin/">Служебный раздел Django</a> — те же модели, для работы в среде разработки.</p>
+{% endblock %}

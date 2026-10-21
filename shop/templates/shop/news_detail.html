@@ -1,0 +1,11 @@
+{% extends "shop/base.html" %}
+{% block title %}{{ item.title }} — Komaru Tea{% endblock %}
+{% block content %}
+<article class="page page-narrow">
+  <p class="crumb"><a href="{% url 'news_list' %}">Новости</a></p>
+  <p class="eyebrow">{{ item.published_at|date:"j E Y" }}</p>
+  <h1>{{ item.title }}</h1>
+  {% if item.image %}<img class="news-hero" src="{{ item.image.url }}" alt="">{% endif %}
+  <div class="prose"><p>{{ item.text }}</p></div>
+</article>
+{% endblock %}

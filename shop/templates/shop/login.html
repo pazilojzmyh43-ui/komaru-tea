@@ -1,0 +1,19 @@
+{% extends "shop/base.html" %}
+{% block title %}Вход — Komaru Tea{% endblock %}
+{% block content %}
+<div class="page page-narrow">
+  <div class="page-head"><h1>Вход</h1></div>
+  <form class="form-card" method="post">
+    {% csrf_token %}
+    {% include "shop/_fields.html" %}
+    <button class="btn btn-gold" type="submit">Войти</button>
+    <p class="demo-note">Нет учётной записи? <a href="{% url 'register' %}">Регистрация клиента</a></p>
+    <div class="demo-note">
+      <p>Учётные записи для проверки курсового проекта:</p>
+      <p>Клиент — <code>client</code> / <code>ClientTea2026</code><br>
+        Менеджер — <code>manager</code> / <code>ManagerTea2026</code><br>
+        Администратор — <code>admin</code> / <code>AdminTea2026</code></p>
+    </div>
+  </form>
+</div>
+{% endblock %}

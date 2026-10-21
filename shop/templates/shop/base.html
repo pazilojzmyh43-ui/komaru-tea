@@ -1,0 +1,79 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Komaru Tea{% endblock %}</title>
+  <link rel="icon" href="{% static 'shop/img/logo.svg' %}">
+  <link rel="stylesheet" href="{% static 'shop/css/style.css' %}">
+</head>
+<body class="{% block body_class %}{% endblock %}">
+  <header class="site-header">
+    <a class="brand" href="{% url 'home' %}">
+      <img class="brand-mark" src="{% static 'shop/img/logo.svg' %}" alt="">
+      <span class="brand-text">
+        <span class="brand-name">Komaru Tea</span>
+        <span class="brand-sub">Чайный дом</span>
+      </span>
+    </a>
+    <input class="nav-toggle" type="checkbox" id="nav-toggle">
+    <label class="nav-burger" for="nav-toggle"><span></span>Меню</label>
+    <nav class="nav">
+      <a href="{% url 'home' %}">Главная</a>
+      <a href="{% url 'catalog' %}">Каталог</a>
+      <a href="{% url 'news_list' %}">Новости</a>
+      <a href="{% url 'contacts' %}">Контакты</a>
+      {% if user_role == 'client' %}
+        <a href="{% url 'cart' %}">Корзина{% if cart_count %} <span class="cart-count">{{ cart_count }}</span>{% endif %}</a>
+        <a href="{% url 'my_orders' %}">Мои заказы</a>
+      {% endif %}
+      {% if user_role == 'manager' %}
+        <a href="{% url 'manager_orders' %}">Заказы</a>
+      {% endif %}
+      {% if user_role == 'admin' %}
+        <a href="{% url 'admin_dashboard' %}">Администрирование</a>
+      {% endif %}
+      {% if user.is_authenticated %}
+        <span class="nav-user">{{ user.get_full_name|default:user.username }}</span>
+        <form method="post" action="{% url 'logout' %}">
+          {% csrf_token %}
+          <button class="link-button" type="submit">Выйти</button>
+        </form>
+      {% else %}
+        <a href="{% url 'login' %}">Вход</a>
+        <a class="nav-accent" href="{% url 'register' %}">Регистрация</a>
+      {% endif %}
+    </nav>
+  </header>
+
+  {% if messages %}
+    <ul class="messages">
+      {% for message in messages %}
+        <li class="message message-{{ message.tags }}">{{ message }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-grid">
+      <div>
+        <p class="brand-name">Komaru Tea</p>
+        <p>Китайский, японский и индийский чай — небольшими партиями, с понятным способом заварки.</p>
+      </div>
+      <div>
+        <p class="footer-label">Чайная</p>
+        <p>г. Псков, ул. Советская, д. 18<br>+7 (8112) 56-19-40<br>tea@komaru-tea.ru</p>
+      </div>
+      <div>
+        <p class="footer-label">Разработчик сайта</p>
+        <p>Семёнов А. А., группа 0483-06<br>Псковский государственный университет, 2026</p>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

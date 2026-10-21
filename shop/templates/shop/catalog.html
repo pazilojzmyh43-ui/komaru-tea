@@ -1,0 +1,22 @@
+{% extends "shop/base.html" %}
+{% block title %}Каталог — Komaru Tea{% endblock %}
+{% block content %}
+<div class="page">
+  <div class="page-head"><h1>Каталог</h1></div>
+  <p class="lead">Три чайные традиции. В каждой категории — листовой чай с происхождением, массой и ценой.</p>
+  <div class="category-grid">
+    {% for category in categories %}
+      <a class="category-card" href="{% url 'category' category.pk %}">
+        {% if category.image %}<img src="{{ category.image.url }}" alt="">{% endif %}
+        <div>
+          <h2>{{ category.name }}</h2>
+          <p>{{ category.description }}</p>
+          <p class="price">{{ category.products.count }} <span>наименований</span></p>
+        </div>
+      </a>
+    {% empty %}
+      <p class="empty">Каталог пока пуст.</p>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

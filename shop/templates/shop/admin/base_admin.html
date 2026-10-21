@@ -1,0 +1,15 @@
+{% extends "shop/base.html" %}
+{% block content %}
+<div class="admin-layout">
+  <aside class="admin-nav">
+    <a href="{% url 'admin_dashboard' %}">Обзор</a>
+    <a href="{% url 'admin_categories' %}">Категории</a>
+    <a href="{% url 'admin_products' %}">Товары</a>
+    <a href="{% url 'admin_news' %}">Новости</a>
+    <a href="{% url 'admin_users' %}">Пользователи</a>
+  </aside>
+  <div>
+    {% block admin %}{% endblock %}
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,57 @@
+{% extends "shop/base.html" %}
+{% load static %}
+{% block title %}Komaru Tea — чайный дом{% endblock %}
+{% block body_class %}page-home{% endblock %}
+{% block content %}
+<section class="hero">
+  <video class="hero-video" autoplay muted loop playsinline poster="{% static 'shop/img/hero-poster.jpg' %}">
+    <source src="{% static 'shop/video/tea-bg.mp4' %}" type="video/mp4">
+  </video>
+  <div class="hero-shade"></div>
+  <div class="hero-content">
+    <img class="hero-mark" src="{% static 'shop/img/logo.svg' %}" alt="">
+    <p class="eyebrow">Интернет-магазин листового чая</p>
+    <h1>Komaru Tea</h1>
+    <p class="hero-lead">Чайный дом Komaru Tea привозит китайский, японский и индийский чай небольшими партиями: улуны, зелёные и белые чаи, шу пуэр и высокогорные чёрные. На каждой карточке — откуда лист и как его заварить.</p>
+    <div class="hero-actions">
+      <a class="btn btn-gold" href="{% url 'catalog' %}">Открыть каталог</a>
+      <a class="btn btn-ghost" href="{% url 'contacts' %}">Адрес чайной</a>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-head">
+    <h2>Последние новости</h2>
+    <a href="{% url 'news_list' %}">Все новости</a>
+  </div>
+  <div class="news-grid">
+    {% for item in news %}
+      <article class="news-card">
+        {% if item.image %}
+          <a href="{% url 'news_detail' item.pk %}"><img src="{{ item.image.url }}" alt=""></a>
+        {% endif %}
+        <p class="eyebrow">{{ item.published_at|date:"j E Y" }}</p>
+        <h3><a href="{% url 'news_detail' item.pk %}">{{ item.title }}</a></h3>
+        <p>{{ item.summary }}</p>
+      </article>
+    {% empty %}
+      <p class="empty">Новости ещё не опубликованы.</p>
+    {% endfor %}
+  </div>
+</section>
+
+{% if featured %}
+<section class="section section-tight">
+  <div class="section-head">
+    <h2>С чего начать</h2>
+    <a href="{% url 'catalog' %}">Весь каталог</a>
+  </div>
+  <div class="product-grid">
+    {% for product in featured %}
+      {% include "shop/_product_card.html" %}
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+{% endblock %}

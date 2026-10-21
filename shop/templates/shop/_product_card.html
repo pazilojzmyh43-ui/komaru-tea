@@ -1,0 +1,11 @@
+<article class="product-card">
+  <a class="product-card-media" href="{% url 'product' product.pk %}">
+    <img src="{{ product.image.url }}" alt="{{ product.name }}">
+  </a>
+  <div class="product-card-body">
+    <p class="eyebrow">{{ product.category.name }}</p>
+    <h3><a href="{% url 'product' product.pk %}">{{ product.name }}</a></h3>
+    <p>{{ product.short_description }}</p>
+    <p class="price">{{ product.price|floatformat:0 }} ₽ <span>{{ product.weight_grams }} г</span></p>
+  </div>
+</article>

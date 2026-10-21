@@ -1,0 +1,26 @@
+{% extends "shop/admin/base_admin.html" %}
+{% block title %}Товары — администрирование{% endblock %}
+{% block admin %}
+<div class="page-head"><h1>Товары</h1><a class="btn btn-gold" href="{% url 'admin_product_create' %}">Добавить</a></div>
+<div class="table-wrap">
+  <table class="data-table">
+    <thead><tr><th></th><th>Название</th><th>Категория</th><th>Цена</th><th></th></tr></thead>
+    <tbody>
+      {% for product in products %}
+        <tr>
+          <td>{% if product.image %}<img class="thumb" src="{{ product.image.url }}" alt="">{% endif %}</td>
+          <td>{{ product.name }}</td>
+          <td>{{ product.category.name }}</td>
+          <td>{{ product.price|floatformat:0 }} ₽</td>
+          <td class="actions">
+            <a href="{% url 'admin_product_edit' product.pk %}">Изменить</a>
+            <form class="inline" method="post" action="{% url 'admin_product_delete' product.pk %}">{% csrf_token %}<button class="link-button" style="color:var(--cinnabar)" type="submit">Удалить</button></form>
+          </td>
+        </tr>
+      {% empty %}
+        <tr><td colspan="5">Товаров нет.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

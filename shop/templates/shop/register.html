@@ -1,0 +1,13 @@
+{% extends "shop/base.html" %}
+{% block title %}Регистрация — Komaru Tea{% endblock %}
+{% block content %}
+<div class="page page-narrow">
+  <div class="page-head"><h1>Регистрация</h1></div>
+  <p class="lead">После регистрации вы становитесь клиентом: можно собирать корзину и оформлять заказы.</p>
+  <form class="form-card" method="post">
+    {% csrf_token %}
+    {% include "shop/_fields.html" %}
+    <button class="btn btn-gold" type="submit">Создать учётную запись</button>
+  </form>
+</div>
+{% endblock %}

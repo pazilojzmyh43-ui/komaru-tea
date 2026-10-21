@@ -1,0 +1,24 @@
+{% extends "shop/admin/base_admin.html" %}
+{% block title %}Новости — администрирование{% endblock %}
+{% block admin %}
+<div class="page-head"><h1>Новости</h1><a class="btn btn-gold" href="{% url 'admin_news_create' %}">Добавить</a></div>
+<div class="table-wrap">
+  <table class="data-table">
+    <thead><tr><th>Дата</th><th>Заголовок</th><th></th></tr></thead>
+    <tbody>
+      {% for item in news %}
+        <tr>
+          <td>{{ item.published_at|date:"j E Y" }}</td>
+          <td>{{ item.title }}</td>
+          <td class="actions">
+            <a href="{% url 'admin_news_edit' item.pk %}">Изменить</a>
+            <form class="inline" method="post" action="{% url 'admin_news_delete' item.pk %}">{% csrf_token %}<button class="link-button" style="color:var(--cinnabar)" type="submit">Удалить</button></form>
+          </td>
+        </tr>
+      {% empty %}
+        <tr><td colspan="3">Новостей нет.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

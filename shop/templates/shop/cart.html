@@ -1,0 +1,46 @@
+{% extends "shop/base.html" %}
+{% block title %}Корзина — Komaru Tea{% endblock %}
+{% block content %}
+<div class="page">
+  <div class="page-head"><h1>Корзина</h1></div>
+  {% if items %}
+    <form method="post" action="{% url 'cart_update' %}">
+      {% csrf_token %}
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr><th></th><th>Чай</th><th>Цена</th><th>Количество</th><th>Сумма</th><th></th></tr>
+          </thead>
+          <tbody>
+            {% for item in items %}
+              <tr>
+                <td><img class="thumb" src="{{ item.product.image.url }}" alt=""></td>
+                <td><a href="{% url 'product' item.product.pk %}">{{ item.product.name }}</a></td>
+                <td>{{ item.product.price|floatformat:0 }} ₽</td>
+                <td><input class="qty" type="number" name="qty_{{ item.pk }}" value="{{ item.quantity }}" min="0" max="20"></td>
+                <td>{{ item.line_total|floatformat:0 }} ₽</td>
+                <td>
+                  <button class="link-button" style="color:var(--cinnabar)" form="remove-{{ item.pk }}" type="submit">Удалить</button>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      <p class="price" style="margin:16px 0">Итого {{ total|floatformat:0 }} ₽</p>
+      <button class="btn btn-line" type="submit">Пересчитать</button>
+    </form>
+    {% for item in items %}
+      <form id="remove-{{ item.pk }}" method="post" action="{% url 'cart_remove' item.pk %}">{% csrf_token %}</form>
+    {% endfor %}
+    <form class="form-card" method="post" style="margin-top:22px">
+      <h2>Оформление заказа</h2>
+      {% csrf_token %}
+      {% include "shop/_fields.html" %}
+      <button class="btn btn-gold" type="submit">Оформить заказ</button>
+    </form>
+  {% else %}
+    <p class="empty">Корзина пуста. Выберите чай в <a href="{% url 'catalog' %}">каталоге</a>.</p>
+  {% endif %}
+</div>
+{% endblock %}

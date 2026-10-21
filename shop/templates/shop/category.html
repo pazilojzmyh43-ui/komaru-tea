@@ -1,0 +1,16 @@
+{% extends "shop/base.html" %}
+{% block title %}{{ category.name }} — Komaru Tea{% endblock %}
+{% block content %}
+<div class="page">
+  <p class="crumb"><a href="{% url 'catalog' %}">Каталог</a></p>
+  <div class="page-head"><h1>{{ category.name }}</h1></div>
+  <p class="lead">{{ category.description }}</p>
+  <div class="product-grid">
+    {% for product in products %}
+      {% include "shop/_product_card.html" %}
+    {% empty %}
+      <p class="empty">В этой категории пока нет товаров.</p>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

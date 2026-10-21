@@ -1,0 +1,38 @@
+{% extends "shop/base.html" %}
+{% block title %}Заказ №{{ order.pk }} — Komaru Tea{% endblock %}
+{% block content %}
+<div class="page">
+  <p class="crumb"><a href="{% url 'my_orders' %}">Мои заказы</a></p>
+  <div class="page-head">
+    <h1>Заказ №{{ order.pk }}</h1>
+    <span class="status status-{{ order.status }}">{{ order.get_status_display }}</span>
+  </div>
+  <p>{{ order.created_at|date:"j E Y, H:i" }}<br>{{ order.address }}<br>{{ order.phone }}</p>
+  {% if order.comment %}<p>{{ order.comment }}</p>{% endif %}
+  <div class="table-wrap">
+    <table class="data-table">
+      <thead><tr><th>Чай</th><th>Цена</th><th>Количество</th><th>Сумма</th></tr></thead>
+      <tbody>
+        {% for item in order.items.all %}
+          <tr>
+            <td>{{ item.product_name }}</td>
+            <td>{{ item.price|floatformat:0 }} ₽</td>
+            <td>{{ item.quantity }}</td>
+            <td>{{ item.line_total|floatformat:0 }} ₽</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <p class="price">Итого {{ order.total|floatformat:0 }} ₽</p>
+  {% if order.can_client_edit %}
+    <div class="actions">
+      <a class="btn btn-line" href="{% url 'order_edit' order.pk %}">Редактировать</a>
+      <form class="inline" method="post" action="{% url 'order_delete' order.pk %}" onsubmit="return confirm('Удалить заказ?');">
+        {% csrf_token %}
+        <button class="btn btn-danger" type="submit">Удалить заказ</button>
+      </form>
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

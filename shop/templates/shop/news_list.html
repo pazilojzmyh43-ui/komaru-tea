@@ -1,0 +1,20 @@
+{% extends "shop/base.html" %}
+{% block title %}Новости — Komaru Tea{% endblock %}
+{% block content %}
+<div class="page">
+  <div class="page-head"><h1>Новости</h1></div>
+  <p class="lead">События чайного дома, новые партии и короткие заметки о заварке. Сначала — самые свежие.</p>
+  <div class="news-grid">
+    {% for item in news %}
+      <article class="news-card">
+        {% if item.image %}<a href="{% url 'news_detail' item.pk %}"><img src="{{ item.image.url }}" alt=""></a>{% endif %}
+        <p class="eyebrow">{{ item.published_at|date:"j E Y" }}</p>
+        <h3><a href="{% url 'news_detail' item.pk %}">{{ item.title }}</a></h3>
+        <p>{{ item.summary }}</p>
+      </article>
+    {% empty %}
+      <p class="empty">Новостей пока нет.</p>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

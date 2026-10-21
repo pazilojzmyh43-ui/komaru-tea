@@ -1,0 +1,10 @@
+{% extends "shop/admin/base_admin.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block admin %}
+<h1>{{ title }}</h1>
+<form class="form-card" method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  {% include "shop/_fields.html" %}
+  <button class="btn btn-gold" type="submit">Сохранить</button>
+</form>
+{% endblock %}

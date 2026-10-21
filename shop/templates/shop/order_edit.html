@@ -1,0 +1,20 @@
+{% extends "shop/base.html" %}
+{% block title %}Изменение заказа №{{ order.pk }} — Komaru Tea{% endblock %}
+{% block content %}
+<div class="page page-narrow">
+  <p class="crumb"><a href="{% url 'order_detail' order.pk %}">Заказ №{{ order.pk }}</a></p>
+  <div class="page-head"><h1>Изменение заказа</h1></div>
+  <p class="lead">Пока заказ новый, можно поменять адрес и количество. Ноль удаляет позицию.</p>
+  <form class="form-card" method="post">
+    {% csrf_token %}
+    {% include "shop/_fields.html" %}
+    {% for item in order.items.all %}
+      <div class="field">
+        <label for="qty-{{ item.pk }}">{{ item.product_name }}, {{ item.price|floatformat:0 }} ₽</label>
+        <input id="qty-{{ item.pk }}" class="qty" type="number" name="qty_{{ item.pk }}" value="{{ item.quantity }}" min="0" max="20">
+      </div>
+    {% endfor %}
+    <button class="btn btn-gold" type="submit">Сохранить</button>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,43 @@
+from django.contrib.auth.views import LogoutView
+from django.urls import path
+
+from . import views
+
+urlpatterns = [
+    path('', views.home, name='home'),
+    path('news/', views.news_list, name='news_list'),
+    path('news/<int:pk>/', views.news_detail, name='news_detail'),
+    path('contacts/', views.contacts, name='contacts'),
+    path('catalog/', views.catalog, name='catalog'),
+    path('catalog/category/<int:pk>/', views.category_detail, name='category'),
+    path('catalog/product/<int:pk>/', views.product_detail, name='product'),
+    path('accounts/login/', views.ShopLoginView.as_view(), name='login'),
+    path('accounts/logout/', LogoutView.as_view(), name='logout'),
+    path('accounts/register/', views.register, name='register'),
+    path('cart/', views.cart, name='cart'),
+    path('cart/add/<int:pk>/', views.cart_add, name='cart_add'),
+    path('cart/update/', views.cart_update, name='cart_update'),
+    path('cart/remove/<int:pk>/', views.cart_remove, name='cart_remove'),
+    path('orders/my/', views.my_orders, name='my_orders'),
+    path('orders/my/<int:pk>/', views.order_detail, name='order_detail'),
+    path('orders/my/<int:pk>/edit/', views.order_edit, name='order_edit'),
+    path('orders/my/<int:pk>/delete/', views.order_delete, name='order_delete'),
+    path('orders/manage/', views.manager_orders, name='manager_orders'),
+    path('orders/manage/<int:pk>/', views.manager_order, name='manager_order'),
+    path('panel/', views.admin_dashboard, name='admin_dashboard'),
+    path('panel/categories/', views.admin_categories, name='admin_categories'),
+    path('panel/categories/add/', views.admin_category_create, name='admin_category_create'),
+    path('panel/categories/<int:pk>/edit/', views.admin_category_edit, name='admin_category_edit'),
+    path('panel/categories/<int:pk>/delete/', views.admin_category_delete, name='admin_category_delete'),
+    path('panel/products/', views.admin_products, name='admin_products'),
+    path('panel/products/add/', views.admin_product_create, name='admin_product_create'),
+    path('panel/products/<int:pk>/edit/', views.admin_product_edit, name='admin_product_edit'),
+    path('panel/products/<int:pk>/delete/', views.admin_product_delete, name='admin_product_delete'),
+    path('panel/news/', views.admin_news, name='admin_news'),
+    path('panel/news/add/', views.admin_news_create, name='admin_news_create'),
+    path('panel/news/<int:pk>/edit/', views.admin_news_edit, name='admin_news_edit'),
+    path('panel/news/<int:pk>/delete/', views.admin_news_delete, name='admin_news_delete'),
+    path('panel/users/', views.admin_users, name='admin_users'),
+    path('panel/users/manager/', views.admin_manager_create, name='admin_manager_create'),
+    path('panel/users/<int:pk>/delete/', views.admin_user_delete, name='admin_user_delete'),
+]
